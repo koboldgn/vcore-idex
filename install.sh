@@ -67,10 +67,30 @@ function copy_board_files {
     fi
 }
 
+function copy_board_files_ebb36 {
+    if [ -d "${CONFIG_DIR}" ]; then
+        sudo cp -av "${SRCDIR}/klipper_config/RatOS/boards/btt-ebb36-12b" "${CONFIG_DIR}/RatOS/boards"
+        echo -e "BTT EBB36 V1.2 board files copied"
+    else
+        echo -e "ERROR: ${CONFIG_DIR} not found."
+        exit 1
+    fi
+}
+
 function copy_example_cfg {
     if [ -d "${CONFIG_DIR}" ]; then
         cp "${SRCDIR}/klipper_config/printer.cfg" "${CONFIG_DIR}/idex_printer.cfg"
         echo -e "example idex_printer.cfg copied"
+    else
+        echo -e "ERROR: ${CONFIG_DIR} not found."
+        exit 1
+    fi
+}
+
+function copy_example_cfg_idex_overrides {
+    if [ -d "${CONFIG_DIR}" ]; then
+        cp "${SRCDIR}/klipper_config/idex-overrides.cfg" "${CONFIG_DIR}/idex-overrides.cfg"
+        echo -e "example idex-overrides.cfg copied"
     else
         echo -e "ERROR: ${CONFIG_DIR} not found."
         exit 1
@@ -123,7 +143,9 @@ stop_klipper
 link_custom_folder
 copy_variables_file
 copy_board_files
+copy_board_files_ebb36
 copy_example_cfg
+copy_example_cfg_idex_overrides
 link_klippy_extras
 link_klippy_kinematics
 copy_modified_release_info
